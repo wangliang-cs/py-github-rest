@@ -1,2 +1,2 @@
 # py-github-rest
-Python wrapper for GitHub rest API
+This library is a Python wrapper for GitHub rest API
