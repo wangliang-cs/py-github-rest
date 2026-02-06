@@ -11,14 +11,14 @@ class PyGithubRest:
         :param tokens: a list of GitHub tokens
         """
         # initialize token manager
-        self.token_manager = TokenManager(tokens)
-        self.github_api = GithubAPIWrapper(self.token_manager)
+        self._token_manager = TokenManager(tokens)
+        self._github_api = GithubAPIWrapper(self._token_manager)
 
     def _batch(self, url_list: list[str], num_workers) -> list:
         ret_list = [None] * len(url_list)
 
         def fetch(index, url):
-            return index, self.github_api.make_github_request(url)
+            return index, self._github_api.make_github_request(url)
 
         with ThreadPoolExecutor(max_workers=num_workers) as executor:
             future_to_index = {executor.submit(fetch, i, url): i for i, url in enumerate(url_list)}
